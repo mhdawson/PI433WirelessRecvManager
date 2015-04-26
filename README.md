@@ -9,10 +9,10 @@ source devices to be easily integrated.
 TODO
 
 ## Currently supported devices
-Generic 2262 based device (motion detector, door sensor, etc.)
-Lacross 141 temperature sensor
-NexxTech temperature sensor
-Blueline Power monitor
+- Generic 2262 based device (motion detector, door sensor, etc.)
+- Lacross 141 temperature sensor
+- NexxTech temperature sensor
+- Blueline Power monitor
 
 ## Adding a new device
 TODO
