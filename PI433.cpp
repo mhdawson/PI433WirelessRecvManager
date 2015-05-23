@@ -9,6 +9,7 @@
 #include "PI433.h"
 
 #define MAX_TOPIC_LENGTH 1024
+#define SEPARATOR "/"
 
 typedef struct DeviceListEntry {
    Device* device;
@@ -18,22 +19,45 @@ typedef struct DeviceListEntry {
 static MessageQueue* queue;
 static DeviceListEntry* devices;
 
-PI433::PI433(int interrupt, char* mqttServer) {
+PI433::PI433(int interrupt, char* mqttServer, char* certsDir) {
    wiringPiISR(interrupt, INT_EDGE_BOTH, &handleInterrupt);
    queue = new MessageQueue();
    devices = NULL;
    _mqttServer = mqttServer;
+   _certsDir = certsDir;
 }
 
 // we do most of the work outside of the interrupt handler.  The interrupt
 // handler allows devices to enqueue messages and then this method processes the
 // messages as time permits. 
 void PI433::handleMessages() {
+   MQTTClient_SSLOptions sslOptions = MQTTClient_SSLOptions_initializer;
    Message lastHandledMessage;
    memset(&lastHandledMessage, 0, sizeof(Message));
    MQTTClient myClient = NULL;
    MQTTClient_connectOptions mqttOptions = MQTTClient_connectOptions_initializer;
    mqttOptions.keepAliveInterval = 20;
+
+   if (strstr(_mqttServer, "ssl://") == _mqttServer) {
+      // ssl is enabled so setup the options
+      mqttOptions.ssl = &sslOptions;
+      sslOptions.trustStore = (char*) malloc(strlen(_certsDir) + strlen(SEPARATOR) + strlen(CA_CERT_FILE) + 1);
+      sslOptions.keyStore   = (char*) malloc(strlen(_certsDir) + strlen(SEPARATOR) + strlen(CLIENT_CERT_FILE) + 1);
+      sslOptions.privateKey   = (char*) malloc(strlen(_certsDir) + strlen(SEPARATOR) + strlen(CLIENT_KEY_FILE) + 1);
+      strcpy((char*) sslOptions.trustStore, _certsDir);
+      strcpy((char*) sslOptions.keyStore, _certsDir);
+      strcpy((char*) sslOptions.privateKey, _certsDir);
+      strcat((char*) sslOptions.trustStore, SEPARATOR);
+      strcat((char*) sslOptions.keyStore, SEPARATOR);
+      strcat((char*) sslOptions.privateKey, SEPARATOR);
+      strcat((char*) sslOptions.trustStore, CA_CERT_FILE);
+      strcat((char*) sslOptions.keyStore, CLIENT_CERT_FILE);
+      strcat((char*) sslOptions.privateKey, CLIENT_KEY_FILE);
+
+      sslOptions.enabledCipherSuites = "TLSv1.2";
+   } else {
+      mqttOptions.ssl = NULL;
+   }
 
    MQTTClient_create(&myClient, _mqttServer, "PI433RecManager", MQTTCLIENT_PERSISTENCE_NONE, NULL);
    MQTTClient_setCallbacks(myClient, NULL, NULL, NULL, NULL);
