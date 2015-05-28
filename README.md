@@ -16,7 +16,7 @@ TODO
 
 ### Lacross 141
 The Lacross 141 is available at Canadian tire and often goes on sale for $10-$15
-![cnd tire link](http://www.canadiantire.ca/en/pdp/la-crosse-weather-station-with-colour-frame-1427129p.html#.VV6MmlKznt8) 
+[cnd tire link](http://www.canadiantire.ca/en/pdp/la-crosse-weather-station-with-colour-frame-1427129p.html#.VV6MmlKznt8) 
 ![Lacross 141](pictures/Lacross-package.jpg?raw=yes)
 
 ## Adding a new device
