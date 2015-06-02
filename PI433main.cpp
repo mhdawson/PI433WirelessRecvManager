@@ -14,6 +14,12 @@
 #include "Device2262.h"
 
 #define NUM_REQUIRED_CERT_FILES 3 
+
+#define MISSING_BROKER  	   -1
+#define MISSING_CERT_DIR           -2 
+#define INVALID_CERT_DIR           -3 
+#define MISSING_CERT_FILES         -4
+#define FAILED_TO_SETUP_WIRING_PI  -5
      
 int main(int argc, char *argv[]) {
    int pin = 2;
@@ -23,7 +29,7 @@ int main(int argc, char *argv[]) {
    if (2 > argc) {
       printf("Missing mqttBroker parameter - exiting\n");
       printf("Usage: PI433Main mqtt_url <cert info dir>\n");
-      return -1;
+      return MISSING_BROKER;
    }
 
    if (strstr(argv[1], "ssl://") == argv[1]) {
@@ -33,14 +39,14 @@ int main(int argc, char *argv[]) {
       if (3 > argc) { 
          printf("Cert info dir required for connection to broker with ssl - exiting\n");
          printf("Usage: PI433Main mqtt_url <cert info dir>\n");
-         return -1;
+         return MISSING_CERT_DIR;
       }
  
       // validate the directory exists
       DIR* dirPtr = opendir(argv[2]);
       if(NULL == dirPtr) {
          printf("Cert info dir was invalid - exiting\n");
-         return -2;
+         return INVALID_CERT_DIR;
       } 
      
       struct dirent *nextEntry;
@@ -56,14 +62,14 @@ int main(int argc, char *argv[]) {
 
       if (requiredFilesFound != NUM_REQUIRED_CERT_FILES) { 
          printf("Missing cert info files, directory must contain client.key, client.cert and ca.cert\n");
-         return -3;
+         return MISSING_CERT_FILES;
       }
 
       certsDir = argv[2];
    }
 
    if(wiringPiSetup() == -1) {
-      return -4;
+      return FAILED_TO_SETUP_WIRING_PI;
    }
 
    PI433 receiver = PI433(pin, argv[1], certsDir);
