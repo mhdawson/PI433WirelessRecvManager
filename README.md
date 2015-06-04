@@ -21,6 +21,10 @@ The Lacross 141 is available at Canadian tire and often goes on sale for $10-$15
 
 ### Generic 2262 Devices
 
+Many different devices should work.  Currently this project only supports one protocol and I believe
+there are a few different ones.  I'll look to add support for the others when I come across them.  These
+are a few that I've used succesfully.
+
 #### Motion detector
 
 Available from ebay, select 433 for frequency and 2262 for chipset
