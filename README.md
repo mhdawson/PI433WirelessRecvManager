@@ -19,6 +19,26 @@ The Lacross 141 is available at Canadian tire and often goes on sale for $10-$15
 [cnd tire link](http://www.canadiantire.ca/en/pdp/la-crosse-weather-station-with-colour-frame-1427129p.html#.VV6MmlKznt8) 
 ![Lacross 141](pictures/Lacross-package.jpg?raw=yes)
 
+### Generic 2262 Devices
+
+#### Motion detector
+
+Available from ebay, select 433 for frequency and 2262 for chipset
+[ebay link motion detector](http://www.ebay.ca/itm/Wireless-Standard-PIR-Motion-Detector-Sensor-315-433-Mhz-1-5-3-3-4-7-M-/171089657359?var=&hash=item0)
+![Motion Detector](pictures/433Motion.jpg)
+
+#### Door Sensor
+Available from ebay, select 433 for frequency and 2262 for chipset
+[ebay link door sensor](http://www.ebay.ca/itm/Wireless-Door-Window-Entry-Detector-Sensor-Contact-315-433-Mhz-/181183039531?var=&hash=item0)
+![Door sensor](pictures/433Door.jpg)
+
+
+#### Smoke Detector
+Available from ebay.
+[ebay link smoke detector](http://www.ebay.ca/itm/321225011653?_trksid=p2057872.m2749.l2649&ssPageName=STRK%3AMEBIDX%3AIT)
+![Smoke Detector](pictures/433Smoke.jpg)
+
+
 ## Adding a new device
 TODO
 
