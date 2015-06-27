@@ -23,25 +23,36 @@ The Lacross 141 is available at Canadian tire and often goes on sale for $10-$15
 
 Many different devices should work.  Currently this project only supports one protocol and I believe
 there are a few different ones.  I'll look to add support for the others when I come across them.  These
-are a few that I've used succesfully.
+are a few that I've used succesfully.  
 
 #### Motion detector
 
+Device: - 2262n - parameters(350,50,4,&lt;your topic&gt;)
 Available from ebay, select 433 for frequency and 2262 for chipset
 [ebay link motion detector](http://www.ebay.ca/itm/Wireless-Standard-PIR-Motion-Detector-Sensor-315-433-Mhz-1-5-3-3-4-7-M-/171089657359?var=&hash=item0)
+
 ![Motion Detector](pictures/433Motion.jpg)
 
 #### Door Sensor
+Device: - 2262n - parameters(350,50,4,&lt;your topic&gt;)
 Available from ebay, select 433 for frequency and 2262 for chipset
 [ebay link door sensor](http://www.ebay.ca/itm/Wireless-Door-Window-Entry-Detector-Sensor-Contact-315-433-Mhz-/181183039531?var=&hash=item0)
 ![Door sensor](pictures/433Door.jpg)
 
 
 #### Smoke Detector
+Device: - 2262n - parameters(350,50,4,&lt;your topic&gt;)
 Available from ebay.
 [ebay link smoke detector](http://www.ebay.ca/itm/321225011653?_trksid=p2057872.m2749.l2649&ssPageName=STRK%3AMEBIDX%3AIT)
+
 ![Smoke Detector](pictures/433Smoke.jpg)
 
+#### Remote controls for 120V switch
+Device: - 2262n - parameters(200,75,2,&lt;your topic&gt;)
+Available from eay.
+[ebay link 120v switch](http://www.ebay.ca/itm/381117176383?_trksid=p2060353.m2749.l2649&ssPageName=STRK%3AMEBIDX%3AIT)
+
+![433Switch](pictures/433switch.jpg)
 
 ## Adding a new device
 TODO
