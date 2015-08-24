@@ -63,9 +63,9 @@ void Device1527::processPulse(long duration) {
       // ok we have all 24 pulses that we expect 
       if (BITS_IN_MESSAGE_1527 == bitCount) {
          for (int i=0;i<BITS_IN_MESSAGE_1527;i=i+1) {
-             if (ONE_PULSE_MIN_LENGTH < durations[i])
+             if (ONE_PULSE_MIN_LENGTH < durations[i]) {
                 receivedCode[i] = '1';
-             }
+             } else {
                 receivedCode[i] = '0';
              }
          }
