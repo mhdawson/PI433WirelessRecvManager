@@ -6,7 +6,33 @@ source devices to be easily integrated.
 
 
 ## To build:
-TODO
+
+### Install wiringPi
+
+<PRE>
+git clone git://git.drogon.net/wiringPi
+cd wiringPi
+./build
+cd ..
+</PRE>
+
+### install paho
+
+<PRE>
+apt-get install libssl-dev
+https://github.com/eclipse/paho.mqtt.c.git
+cd paho.mqtt.c.git
+export MQTTCLIENT_DIR=./src
+make install
+cd ..
+</PRE>
+
+### Build PI433WirelessRecvManager
+<PRE>
+git clone https://github.com/mhdawson/PI433WirelessRecvManager.git
+cd PI433WirelessRecvManager
+make
+</PRE>
 
 ## Currently supported devices
 - Generic 2262 based device (motion detector, door sensor, etc.)
