@@ -36,6 +36,7 @@ make
 
 ## Currently supported devices
 - Generic 2262 based device (motion detector, door sensor, etc.)
+- Generic 1527 based device (door sensor, etc.)
 - Lacross 141 temperature sensor
 - NexxTech temperature sensor
 - Blueline Power monitor
@@ -51,6 +52,11 @@ Many different devices should work.  Currently this project only supports one pr
 there are a few different ones.  I'll look to add support for the others when I come across them.  These
 are a few that I've used succesfully.  
 
+### Generic 1527 Device
+
+Many different devices should work.  It is similar to 2262 but has less redundancy and more bits
+available in the message.  They are not configured by jumpers.
+
 #### Motion detector
 
 Device: - 2262n - parameters(350,50,4,&lt;your topic&gt;)
@@ -65,7 +71,6 @@ Available from ebay, select 433 for frequency and 2262 for chipset
 [ebay link door sensor](http://www.ebay.ca/itm/Wireless-Door-Window-Entry-Detector-Sensor-Contact-315-433-Mhz-/181183039531?var=&hash=item0)
 ![Door sensor](pictures/433Door.jpg)
 
-
 #### Smoke Detector
 Device: - 2262n - parameters(350,50,4,&lt;your topic&gt;)
 Available from ebay.
@@ -79,6 +84,12 @@ Available from eay.
 [ebay link 120v switch](http://www.ebay.ca/itm/381117176383?_trksid=p2060353.m2749.l2649&ssPageName=STRK%3AMEBIDX%3AIT)
 
 ![433Switch](pictures/433switch.jpg)
+
+#### Door Sensor
+Device: - 1527 - parameters(350,50,4,&lt;your topic&gt;)
+Available from ebay  
+[ebay link door sensor](http://www.ebay.ca/itm/311256729170?_trksid=p2060353.m2749.l2649&ssPageName=STRK%3AMEBIDX%3AIT)
+![Door sensor](pictures/1527Door.jpg)
 
 ## Adding a new device
 TODO
