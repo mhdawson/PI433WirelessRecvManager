@@ -20,6 +20,7 @@ static MessageQueue* queue;
 static DeviceListEntry* devices;
 
 PI433::PI433(int interrupt, char* mqttServer, char* certsDir) {
+   pinMode(interrupt,INPUT);
    wiringPiISR(interrupt, INT_EDGE_BOTH, &handleInterrupt);
    queue = new MessageQueue();
    devices = NULL;

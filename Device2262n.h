@@ -13,7 +13,8 @@
 
 #include "Device.h"
 
-#define BITS_IN_MESSAGE_2262 24
+#define BITS_IN_MESSAGE_2262    24
+#define TRISTATE_MESSAGE_LENGTH 12
 
 class Device2262n : public Device {
    public:
@@ -33,8 +34,8 @@ class Device2262n : public Device {
       const char* _baseTopic;
       bool syncFound;
       unsigned int bitCount;
-      unsigned char tristateCode[BITS_IN_MESSAGE_2262 + 1];
-      unsigned char lastMessage[BITS_IN_MESSAGE_2262];
+      unsigned char tristateCode[TRISTATE_MESSAGE_LENGTH];
+      unsigned char lastMessage[TRISTATE_MESSAGE_LENGTH];
       unsigned int durations[BITS_IN_MESSAGE_2262];
       long pulseCount;
       long repeatCount;

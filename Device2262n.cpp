@@ -25,10 +25,10 @@ Device2262n::Device2262n(int pulseWidth, int pulseSlack, int minRepeats, const c
    syncFound = false;
    bitCount = 0;
    memset(durations, 0, sizeof(int)*BITS_IN_MESSAGE_2262);
-   memset(tristateCode, 0, sizeof(unsigned char)*(BITS_IN_MESSAGE_2262+1));
+   memset(tristateCode, 0, TRISTATE_MESSAGE_LENGTH);
    pulseCount = 0;
    repeatCount = 0;
-   memset(lastMessage, 0, sizeof(lastMessage));
+   memset(lastMessage, 0, TRISTATE_MESSAGE_LENGTH);
 }
 
 int Device2262n::deviceType(void) {
@@ -80,19 +80,19 @@ void Device2262n::processPulse(long duration) {
          }
 
          // make sure we have a valid code
-         if (0 == memcmp(lastMessage, tristateCode, sizeof(lastMessage))) {
+         if (0 == memcmp(lastMessage, tristateCode, TRISTATE_MESSAGE_LENGTH)) {
             repeatCount++;
             if (repeatCount >= _minRepeats) { 
                // ok we are sure now it is a message as it has been repeated 
                // enough times
                repeatCount = 0;
-               memset(lastMessage,0,sizeof(lastMessage));
+               memset(lastMessage, 0, TRISTATE_MESSAGE_LENGTH);
                Message* newMessage = queue->getFreeMessage();
                if (NULL != newMessage) {
 	          memset(newMessage, 0, sizeof(Message));
                   newMessage->device = (void*) this;
                   newMessage->timestamp = time(NULL); 
-                  strncpy(newMessage->text, (const char*) tristateCode, sizeof(tristateCode));
+                  strncpy(newMessage->text, (const char*) tristateCode, TRISTATE_MESSAGE_LENGTH);
                   newMessage->code = 0;
                   queue->enqueueMessage(newMessage);
                } else {
@@ -102,7 +102,7 @@ void Device2262n::processPulse(long duration) {
          } else {
             repeatCount = 0;
          }
-         memcpy(lastMessage, tristateCode, sizeof(lastMessage));
+         memcpy(lastMessage, tristateCode, TRISTATE_MESSAGE_LENGTH);
          // ok wait for the next message
          syncFound = false;
       } 
