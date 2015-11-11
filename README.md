@@ -112,6 +112,8 @@ The is the circuit I used to wire up the receiver to the pi:
 The resistor and diode are used to clamp the output of the tranmitter to 3.3v to
 match the gpio input on the pi. 
 
+PCB layout for board that includes this circuit and those for other
+related projects: [PI433-RX-TX-Temp-board](https://github.com/mhdawson/PI433-RX-TX-Temp-board)
 
 
 ## TODOs
