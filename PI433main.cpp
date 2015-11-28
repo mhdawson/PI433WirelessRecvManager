@@ -11,6 +11,7 @@
 #include "BluelineDevice.h"
 #include "NexxTechDevice.h"
 #include "LacrossTX141.h"
+#include "ArduinoTHSensor.h"
 #include "Device2262.h"
 #include "Device2262n.h"
 #include "Device1527.h"
@@ -80,6 +81,7 @@ int main(int argc, char *argv[]) {
    receiver.registerDevice(new BluelineDevice(0x1efd)); //use houseCode when paper in way, reversed
    receiver.registerDevice(new NexxTechDevice());
    receiver.registerDevice(new LacrossTX141());
+   receiver.registerDevice(new ArduinoTHSensor());
    receiver.registerDevice(new Device2262());
    receiver.registerDevice(new Device2262n(200,75,2,"house/2262/200"));
    receiver.registerDevice(new Device2262n(350,50,4,"house/2262/350"));
