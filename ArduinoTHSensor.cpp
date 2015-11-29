@@ -109,8 +109,36 @@ void ArduinoTHSensor::decodeMessage(Message* message) {
 };
 
 void ArduinoTHSensor::publishTopic(Message* message, char* buffer, int maxLength) {
+   // will not be called but still has to be implemented
+   // until we remove and update the rest of the devices
+}
+
+int ArduinoTHSensor::numMessages(void) {
+  return 2;
+}
+
+void ArduinoTHSensor::publishTopic(int messageNum, Message* message, char* buffer, int maxLength) {
    char* bytes = (char*) &message->code;
-   snprintf(buffer, maxLength, "house/arduinoTHSensor/%x/temp", bytes[3]);
+   if (messageNum == 0) {
+      snprintf(buffer, maxLength, "house/arduinoTHSensor/%x/temp", bytes[3]);
+   } else {
+      snprintf(buffer, maxLength, "house/arduinoTHSensor/%x/humidity", bytes[3]);
+   }
+}
+
+void ArduinoTHSensor::getMessageText(int messageNum, Message* message, char* buffer, int maxLength) {
+   char* bytes = (char*) &message->code;
+   if (messageNum == 0) {
+      sprintf(buffer, "%ld, %x - temp: %d",
+              message->timestamp,
+              message->code,
+              (int) bytes[1] - 128);
+   } else {
+      sprintf(buffer, "%ld, %x - humidity: %d",
+              message->timestamp,
+              message->code,
+              (int) bytes[2]);
+   }
 }
 
 // to calculate the checksum first reverse the nibbles in each byte

@@ -6,6 +6,7 @@
 #define _DEVICE
 
 #include "MessageQueue.h"
+#include <string.h>
 
 class Device {
    protected:
@@ -14,6 +15,11 @@ class Device {
    public:
       Device();
       void setQueue(MessageQueue* queue);
+
+      // can be overriden if the device has more than one message
+      virtual int numMessages(void);
+      virtual void getMessageText(int messageNum, Message* message, char* buffer, int maxLength);
+      virtual void publishTopic(int messageNum, Message* message, char* buffer, int maxLength);
 
       // must be implemented by sub class
       virtual int deviceType(void) = 0;

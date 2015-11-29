@@ -9,6 +9,7 @@
 #include "PI433.h"
 
 #define MAX_TOPIC_LENGTH 1024
+#define MAX_MESSAGE_LENGTH 256
 #define SEPARATOR "/"
 
 typedef struct DeviceListEntry {
@@ -75,6 +76,7 @@ void PI433::handleMessages() {
 
    while(1) {
       char topicBuffer[MAX_TOPIC_LENGTH];
+      char messageBuffer[MAX_MESSAGE_LENGTH];
       usleep(1000 * 1000);
       MQTTClient_yield();
 
@@ -96,22 +98,25 @@ void PI433::handleMessages() {
                 ||lastHandledMessage.code != nextMessage->code 
                 ||lastHandledMessage.type != nextMessage->type
                ) {
-               // get the topic to publish the message to, a zero length string means don't publish
-               topicBuffer[0] = 0;
-               messageDevice->publishTopic(nextMessage, topicBuffer, MAX_TOPIC_LENGTH); 
 
-               if (strlen(topicBuffer) != 0) {
-                  // printf("%s\n", nextMessage->text);
+               for (int i=0;i<messageDevice->numMessages();i++) {
+                  // get the topic to publish the message to, a zero length string means don't publish
+                  topicBuffer[0] = 0;
+                  messageBuffer[0] = 0;
+                  messageDevice->publishTopic(i, nextMessage, topicBuffer, MAX_TOPIC_LENGTH); 
+                  messageDevice->getMessageText(i, nextMessage, messageBuffer, MAX_MESSAGE_LENGTH); 
 
-                  int result = MQTTClient_publish(myClient, topicBuffer,
-                                  strlen(nextMessage->text), nextMessage->text, 0, false, NULL); 
-                  if (MQTTCLIENT_SUCCESS != result) {
-                     // try to reconnect and send again
-                     MQTTClient_connect(myClient, &mqttOptions);
-                     result = MQTTClient_publish(myClient, topicBuffer, strlen(nextMessage->text),
-                                 nextMessage->text, 0, false, NULL); 
+                  if (strlen(topicBuffer) != 0) {
+                     int result = MQTTClient_publish(myClient, topicBuffer,
+                                     strlen(messageBuffer), messageBuffer, 0, false, NULL); 
                      if (MQTTCLIENT_SUCCESS != result) {
-                        printf("publish failed:%d\n",result);
+                        // try to reconnect and send again
+                        MQTTClient_connect(myClient, &mqttOptions);
+                        result = MQTTClient_publish(myClient, topicBuffer, strlen(messageBuffer),
+                                    messageBuffer, 0, false, NULL); 
+                        if (MQTTCLIENT_SUCCESS != result) {
+                           printf("publish failed:%d\n",result);
+                        }
                      }
                   }
                }
