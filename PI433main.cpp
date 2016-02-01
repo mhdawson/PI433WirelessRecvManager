@@ -12,6 +12,7 @@
 #include "NexxTechDevice.h"
 #include "LacrossTX141.h"
 #include "ArduinoTHSensor.h"
+#include "ArduinoTHSensor2.h"
 #include "ArduinoLightSensor.h"
 #include "ArduinoDS18B20Sensor.h"
 #include "Device2262.h"
@@ -84,6 +85,7 @@ int main(int argc, char *argv[]) {
    receiver.registerDevice(new NexxTechDevice());
    receiver.registerDevice(new LacrossTX141());
    receiver.registerDevice(new ArduinoTHSensor());
+   receiver.registerDevice(new ArduinoTHSensor2());
    receiver.registerDevice(new ArduinoLightSensor());
    receiver.registerDevice(new ArduinoDS18B20Sensor());
    receiver.registerDevice(new Device2262());

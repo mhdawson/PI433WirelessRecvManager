@@ -5,6 +5,8 @@
 #ifndef _MESSAGE_QUEUE
 #define _MESSAGE_QUEUE
 
+#include <stdint.h>
+
 #define MAX_MESSAGES 16
 #define MAX_MESSAGE_TEXT_LENGTH 64
 
@@ -14,6 +16,7 @@ typedef struct Message {
    long timestamp;
    unsigned long code;
    float value;
+   uint64_t longCode;
    char text[MAX_MESSAGE_TEXT_LENGTH];
    Message* next;
 } Message;
