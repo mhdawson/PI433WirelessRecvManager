@@ -111,7 +111,7 @@ int ArduinoTHSensor2::getDeviceId(char* bytes) {
 void ArduinoTHSensor2::decodeMessage(Message* message) {
    char* bytes = (char*) &message->longCode;
    message->type = 1;
-   sprintf(message->text, "%ld, %x - temp: %f,humidity: %d",
+   sprintf(message->text, "%ld, %llx - temp: %f,humidity: %d",
            message->timestamp,
            message->longCode,
            getTemperature(bytes),
@@ -139,12 +139,12 @@ void ArduinoTHSensor2::publishTopic(int messageNum, Message* message, char* buff
 void ArduinoTHSensor2::getMessageText(int messageNum, Message* message, char* buffer, int maxLength) {
    char* bytes = (char*) &message->longCode;
    if (messageNum == 0) {
-      sprintf(buffer, "%ld, %x - temp: %f",
+      sprintf(buffer, "%ld, %llx - temp: %f",
               message->timestamp,
               message->longCode,
               getTemperature(bytes));
    } else {
-      sprintf(buffer, "%ld, %x - humidity: %d",
+      sprintf(buffer, "%ld, %llx - humidity: %d",
               message->timestamp,
               message->longCode,
               getHumidity(bytes));
