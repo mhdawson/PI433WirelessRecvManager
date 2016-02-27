@@ -98,8 +98,9 @@ void NexxTechDevice::processPulse(long duration) {
              checksum = (checksum + 1) & 0xFF;
          }
 
-         // if the checksum is valid then enqueue the message
-         if(checksum == bytes[0]) {
+         // if the checksum is valid and its a temp message
+         //  then enqueue the message
+         if((checksum == bytes[0]) && (bytes[3] == 0x2)) {
             Message* newMessage = queue->getFreeMessage();
             if (NULL != newMessage) {
 		memset(newMessage, 0, sizeof(Message));
