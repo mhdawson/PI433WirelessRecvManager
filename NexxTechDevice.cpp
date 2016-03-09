@@ -99,7 +99,7 @@ void NexxTechDevice::processPulse(long duration) {
          }
 
          // if the checksum is valid
-         if(checksum == bytes[0]) {
+         if((checksum == bytes[0]) && ((bytes[3] & 0xF) == 0x02)) {
             Message* newMessage = queue->getFreeMessage();
             if (NULL != newMessage) {
 		memset(newMessage, 0, sizeof(Message));
