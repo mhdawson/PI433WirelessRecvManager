@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <algorithm>
 
 #define DEVICE_ID 10
 #define DEVICE_NAME "ArduinoLightSensor"
@@ -100,7 +101,7 @@ void ArduinoLightSensor::processPulse(long duration) {
 
 void ArduinoLightSensor::decodeMessage(Message* message) {
    char* bytes = (char*) &message->code;
-   int lightValue  = bytes[2] * 256 + bytes[1];
+   int lightValue  = std::min(bytes[2] * 256 + bytes[1], 1000);
    message->type = 1;
    sprintf(message->text, "%ld, %x - light: %d",
            message->timestamp,
@@ -124,7 +125,7 @@ void ArduinoLightSensor::publishTopic(int messageNum, Message* message, char* bu
 
 void ArduinoLightSensor::getMessageText(int messageNum, Message* message, char* buffer, int maxLength) {
    char* bytes = (char*) &message->code;
-   int lightValue  = bytes[2] * 256 + bytes[1];
+   int lightValue  = std::min(bytes[2] * 256 + bytes[1], 1000);
    sprintf(buffer, "%ld, %x - light: %d",
            message->timestamp,
            message->code,
