@@ -76,11 +76,19 @@ void MeatThermometer1::processPulse(long duration) {
 
       // check if we have all 32 bits that we expect as part of the message
       if (EXPECTED_MESSAGE_BITS == bitCount) {
-         char* bytes = (char*) &code;
+         unsigned char* bytes = (unsigned char*) &code;
+
+         // this is broken out as was experimenting to see if second half
+         // of checksum was fletcher's checksum which requires sumA
+         // after each component is added. It does not seem to be
+         // so still need to work on how to decode the other half
+         unsigned char sumA = 0;
+         sumA = sumA + bytes[3];
+         sumA = sumA + bytes[2];
+         sumA = sumA + bytes[1];
 
          // if the checksum is valid
-//         if((checksum == bytes[0]) && ((bytes[3] & 0xF) == 0x02)) {
-         if(true == true) {
+         if((sumA & 0xF) == (bytes[0] & 0xF)) {
             Message* newMessage = queue->getFreeMessage();
             if (NULL != newMessage) {
 		memset(newMessage, 0, sizeof(Message));
@@ -117,13 +125,6 @@ void MeatThermometer1::processPulse(long duration) {
 
 void MeatThermometer1::decodeMessage(Message* message){
    char* bytes = (char*) &message->code;
-
-unsigned int val1 = bytes[0];
-unsigned int val2 = bytes[1];
-unsigned int val3 = bytes[2];
-unsigned int val4 = bytes[3];
-printf("%x, %x, %x, %x\n", val1, val2, val3, val4);
-
    unsigned int device = bytes[3];
 
    // temperature is encoded as the celcius temperator multiplied by 10 and
