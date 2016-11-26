@@ -18,6 +18,7 @@
 #include "Device2262.h"
 #include "Device2262n.h"
 #include "Device1527.h"
+#include "MeatThermometer1.h"
 
 #define NUM_REQUIRED_CERT_FILES 3 
 
@@ -92,6 +93,7 @@ int main(int argc, char *argv[]) {
    receiver.registerDevice(new Device2262n(200,75,2,"house/2262/200"));
    receiver.registerDevice(new Device2262n(350,50,4,"house/2262/350"));
    receiver.registerDevice(new Device1527(350,50,4,"house/1527/350"));
+   receiver.registerDevice(new MeatThermometer1());
    receiver.handleMessages();
 }
 
