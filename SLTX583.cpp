@@ -127,9 +127,40 @@ void SLTX583::decodeMessage(Message* message) {
    snprintf(message->text, MAX_MESSAGE_TEXT_LENGTH, "%ld, %x - temp: %.1f, hum: %d, chan: %d", message->timestamp, message->code, temp/10, humidity, channel);
 };
 
+// will not be called
 void SLTX583::publishTopic(Message* message, char* buffer, int maxLength) {
    char* bytes = (char*) &message->code;
    char channel = ((bytes[2] & 0x30) >>4) + 1;
    snprintf(buffer, maxLength, "house/SLTX583/%x", channel);
 }
 
+int SLTX583::numMessages(void) {
+  return 2;
+}
+
+void SLTX583::publishTopic(int messageNum, Message* message, char* buffer, int maxLength) {
+   char* bytes = (char*) &message->code;
+   char channel = ((bytes[2] & 0x30) >>4) + 1;
+   char id = bytes[3];
+   if (messageNum == 0) {
+      snprintf(buffer, maxLength, "house/SLTX583/%x/%x/temp", channel, id);
+   } else {
+      snprintf(buffer, maxLength, "house/SLTX583/%x/%x/humidity", channel, id);
+   }
+}
+
+void SLTX583::getMessageText(int messageNum, Message* message, char* buffer, int maxLength) {
+   char* bytes = (char*) &message->code;
+
+   if (messageNum == 0) {
+      float temp = (bytes[3] & 0xF)*256 + bytes[1];
+      snprintf(buffer,
+               maxLength,
+               "%ld, %x - temp: %.1f", message->timestamp, message->code, temp/10);
+   } else {
+      char humidity = bytes[0];
+      snprintf(buffer,
+               maxLength,
+               "%ld, %x - humidity: %d", message->timestamp, message->code, humidity);
+   }
+}

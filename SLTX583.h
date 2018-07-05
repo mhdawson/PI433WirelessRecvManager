@@ -18,7 +18,11 @@ class SLTX583 : public Device {
 
       virtual void processPulse(long duration);
       virtual void decodeMessage(Message* message);
+
+      virtual int numMessages(void);
+      virtual void getMessageText(int messageNum, Message* message, char* buffer, int maxLength);
       virtual void publishTopic(Message* message, char* buffer, int maxLength);
+      virtual void publishTopic(int messageNum, Message* message, char* buffer, int maxLength);
 
    private:
       bool syncFound;
